@@ -1,2 +1,3 @@
 # ignore generated .class files.
 *.class
+pong/.idea/workspace.xml
