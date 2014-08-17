@@ -24,6 +24,8 @@ public class ClientServerTCP {
     //JTextfield values
     static String ipAddressFromJTextfield;
     static String portNumberFromJTextfield;
+    static Conections connectionHandler = new Conections();
+    static boolean startConnection= false;
 
     public static void main (String args[]){
         ClientServerTCP.createConnectionWindow();
@@ -71,19 +73,7 @@ public class ClientServerTCP {
             JLabel title = new JLabel("Pong Connection");
             JButton connectTo = new JButton("Connect to");
             JButton waitForAConnection = new JButton("Wait for a connection");
-            connectTo.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent actionEvent) {
-                    createConnectToWindow(frameWindow, viewPanel);
-                }
-            });
-            waitForAConnection.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent actionEvent) {
-                    createWaitingForAConnectionWindow(frameWindow, viewPanel);
-                    executionServer();
-                }
-            });
+
             //Adds the created components.
             viewPanel.add(title);
             viewPanel.add(connectTo);
@@ -94,6 +84,22 @@ public class ClientServerTCP {
             frameWindow.setSize(250,250);
             //Show it.
             frameWindow.setVisible(true);
+            connectTo.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent actionEvent) {
+                    createConnectToWindow(frameWindow, viewPanel);
+                }
+            });
+            waitForAConnection.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent actionEvent) {
+                    createWaitingForAConnectionWindow(frameWindow, viewPanel);
+                    while(startConnection) {
+                        connectionHandler.serverCom("");
+                    }
+
+                }
+            });
         }catch(HeadlessException hle){
             System.err.println("Error caused by: " + hle);
         }
@@ -115,7 +121,8 @@ public class ClientServerTCP {
                 ipAddressFromJTextfield = ipAddressJTextfield.getText();
                 portNumberFromJTextfield = portNumberJTextfield.getText();
                 System.out.println("ip address: " + ipAddressFromJTextfield + "and the port number: " + portNumberFromJTextfield);
-                executionClient();
+                connectionHandler.clientCom(ipAddressFromJTextfield, portNumberFromJTextfield);
+                //executionClient();
             }
         });
         panel.add(title);
@@ -144,6 +151,7 @@ public class ClientServerTCP {
             frameWindow.setSize(250, 250);
             //Show it.
             frameWindow.setVisible(true);
+            startConnection = true;
         }catch(Exception e){
             System.err.println("Error caused by: " + e);
             e.printStackTrace();
@@ -156,49 +164,4 @@ public class ClientServerTCP {
         //Add Images
     }
 
-    private static void executionClient(){
-        Socket clientSocket;
-        String clientIP, portNumber;
-        //Aqui se reciben los parametros de IP y puerto, de la interfaz grafica
-        clientIP = ipAddressFromJTextfield;
-        portNumber = portNumberFromJTextfield;
-        Integer port = Integer.parseInt(portNumber);
-        try {
-            if(!clientIP.isEmpty()) {
-                InetAddress IP = InetAddress.getByName(clientIP);
-                clientSocket = new Socket(IP, port);
-            }
-
-
-        } catch (UnknownHostException ue) {
-            System.err.println("ERROR: IP addres could not be determined. Exception caused by: " + ue);
-        } catch (IOException ioe){
-            System.err.println("ERROR: Socket connection failed. Exception caused by: " + ioe);
-        }
-    }
-
-    private static void executionServer(){
-        ServerSocket serverSocket;
-        String clientIP, portNumber;
-        //Aqui se reciben los parametros de IP y puerto, de la interfaz grafica
-        clientIP = ipAddressFromJTextfield;
-        portNumber = "4502";
-        Integer port = Integer.parseInt(portNumber);
-        //while(clientIP.isEmpty()){
-        //recibir el parametro del puerto
-        try {
-            if(port != null) {
-                serverSocket = new ServerSocket(port);
-                //while(true){
-                Socket socket = serverSocket.accept();
-                //tirar a pantalla de menu
-                System.out.println("Connection accepted");
-                // menu.start();
-                // }
-            }
-        } catch (IOException ioe) {
-            System.err.println("ERROR: Socket connection failed. Exception caused by: " + ioe);
-        }
-        //}
-    }
 }
