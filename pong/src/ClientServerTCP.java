@@ -81,7 +81,7 @@ public class ClientServerTCP {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
                     createWaitingForAConnectionWindow(frameWindow, viewPanel);
-                    executionServer();
+
                 }
             });
             //Adds the created components.
