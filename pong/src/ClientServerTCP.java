@@ -30,6 +30,31 @@ public class ClientServerTCP {
         ServerSocket serverSocket;
         Socket clientSocket;
         String clientIP, portNumber;
+        //Aqui se reciben los parametros de IP y puerto, de la interfaz grafica
+
+        clientIP = ipAddressFromJTextfield;
+        portNumber = portNumberFromJTextfield;
+
+        //Empezar a construir parametros para la conexion
+
+        //}
+        /*
+        while(clientIP.isEmpty()){
+            //recibir el parametro del puerto
+            try {
+                if(port != null) {
+                    serverSocket = new ServerSocket(port);
+                    while(true){
+                        Socket socket = serverSocket.accept();
+                        //tirar a pantalla de menu
+                        System.out.println("Connection accepted");
+                        // menu.start();
+                    }
+                }
+            } catch (IOException ioe) {
+                System.err.println("ERROR: Socket connection failed. Exception caused by: " + ioe);
+            }
+        }*/
 
     }
 
@@ -159,20 +184,20 @@ public class ClientServerTCP {
         portNumber = "4502";
         Integer port = Integer.parseInt(portNumber);
         //while(clientIP.isEmpty()){
-            //recibir el parametro del puerto
-            try {
-                if(port != null) {
-                    serverSocket = new ServerSocket(port);
-                    //while(true){
-                        Socket socket = serverSocket.accept();
-                        //tirar a pantalla de menu
-                        System.out.println("Connection accepted");
-                        // menu.start();
-                   // }
-                }
-            } catch (IOException ioe) {
-                System.err.println("ERROR: Socket connection failed. Exception caused by: " + ioe);
+        //recibir el parametro del puerto
+        try {
+            if(port != null) {
+                serverSocket = new ServerSocket(port);
+                //while(true){
+                Socket socket = serverSocket.accept();
+                //tirar a pantalla de menu
+                System.out.println("Connection accepted");
+                // menu.start();
+                // }
             }
+        } catch (IOException ioe) {
+            System.err.println("ERROR: Socket connection failed. Exception caused by: " + ioe);
+        }
         //}
     }
 }
