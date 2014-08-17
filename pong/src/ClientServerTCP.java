@@ -28,10 +28,10 @@ public class ClientServerTCP {
     static String portNumberFromJTextfield;
 
     public static void main (String args[]) throws Exception{
-        //ClientServerTCP.createConnectionWindow();
-        LoadImages loadMenu = new LoadImages();
-        loadMenu.loadStartMenu();
-        loadMenu.loadSelector();
+        ClientServerTCP.createConnectionWindow();
+        //LoadImages loadMenu = new LoadImages();
+        //loadMenu.loadStartMenu();
+        //loadMenu.loadSelector();
         ServerSocket serverSocket;
         Socket clientSocket;
         String clientIP, portNumber;
@@ -86,7 +86,7 @@ public class ClientServerTCP {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
                     createWaitingForAConnectionWindow(frameWindow, viewPanel);
-                    //executionServer();
+                    executionServer();
                 }
             });
             //Adds the created components.
@@ -198,11 +198,16 @@ public class ClientServerTCP {
                 Socket socket = serverSocket.accept();
                 //tirar a pantalla de menu
                 System.out.println("Connection accepted");
+                LoadImages startMenu = new LoadImages();
+                startMenu.loadStartMenu();
+                startMenu.loadSelector();
                 // menu.start();
                 // }
             }
         } catch (IOException ioe) {
             System.err.println("ERROR: Socket connection failed. Exception caused by: " + ioe);
+        } catch (Exception e) {
+            System.err.println("ERROR: caused by: " + e);
         }
         //}
     }
