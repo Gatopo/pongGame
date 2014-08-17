@@ -1,3 +1,5 @@
+import pong.view.LoadImages;
+
 import javax.swing.*;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -27,8 +29,11 @@ public class ClientServerTCP {
     static Conections connectionHandler = new Conections();
     static boolean startConnection= false;
 
-    public static void main (String args[]){
-        ClientServerTCP.createConnectionWindow();
+    public static void main (String args[]) throws Exception{
+        //ClientServerTCP.createConnectionWindow();
+        LoadImages loadMenu = new LoadImages();
+        loadMenu.loadStartMenu();
+        loadMenu.loadSelector();
         ServerSocket serverSocket;
         Socket clientSocket;
         String clientIP, portNumber;
