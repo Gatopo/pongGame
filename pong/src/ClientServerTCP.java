@@ -81,7 +81,7 @@ public class ClientServerTCP {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
                     createWaitingForAConnectionWindow(frameWindow, viewPanel);
-                    executionServer();
+                    //executionServer();
                 }
             });
             //Adds the created components.
@@ -148,6 +148,7 @@ public class ClientServerTCP {
             System.err.println("Error caused by: " + e);
             e.printStackTrace();
         }
+        //executionServer();
     }
 
     private static void createStartClientServerWindow(JFrame jFrame, JPanel panel){
