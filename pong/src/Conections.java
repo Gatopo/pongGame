@@ -23,9 +23,7 @@ public class Conections {
      * @param portNumber    Port Number to open the communication with the Server
      */
     public void clientCom(String IP, String portNumber){
-        Socket client;
         Integer port = Integer.parseInt(portNumber);
-
         if(!IP.isEmpty()){
             try {
                 InetAddress IPAddress = InetAddress.getByName(IP);
@@ -43,16 +41,50 @@ public class Conections {
      * Port Number received in the parameter
      * @param portNumber    Port Number to open the communicacion with the Client.
      */
-    public void serverCom(String portNumber){
-        Integer port = portNumber.isEmpty()? 4502: Integer.parseInt(portNumber);
+    public boolean serverCom(String portNumber) {
+        Integer port = portNumber.isEmpty() ? 4502 : Integer.parseInt(portNumber);
+        boolean status = false;
         try {
-            ServerSocket serverSocket = new ServerSocket(port);
-            serverTCPSocket = serverSocket.accept();
-            System.out.println("Conection Accepted");
+            if (available(port)) {
+                ServerSocket serverSocket = new ServerSocket(port);
+                serverTCPSocket = serverSocket.accept();
+                System.out.println("Conection Accepted");
+                status = true;
+            } else {
+                System.err.println("Port " + port + " is used on another app");
+                System.err.println("Please use another port");
+            }
+            return status;
         } catch (IOException ioe) {
             System.err.println("ERROR: Socket connection failed. Exception caused by: " + ioe);
         }
+        return status;
+    }
 
+    /**
+     * Checks if the port is opened from other applications.
+     *
+     * @param port
+     * @return
+     */
+    public static boolean available(int port) {
+        ServerSocket ss = null;
+        try {
+            ss = new ServerSocket(port);
+            ss.setReuseAddress(true);
+            return true;
+        } catch (IOException e) {
+        } finally {
+            if (ss != null) {
+                try {
+                    ss.close();
+                } catch (IOException e) {
+                /* should not be thrown */
+                }
+            }
+        }
+
+        return false;
     }
 
     /**
