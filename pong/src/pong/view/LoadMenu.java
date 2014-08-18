@@ -20,10 +20,10 @@ public class LoadMenu implements ImageObserver, KeyListener {
     private BufferedImage surface;
     private Boolean selectorPosition = true;
     //
-    private String menuBackgroundPath = "src\\images\\start_menu.png";
+    private String menuBackgroundPath = "src/images/start_menu.png";
     private File menuBackgroundFile = new File(menuBackgroundPath);
     //
-    private String selectorPath = "src\\images\\selector.png";
+    private String selectorPath = "src/images/selector.png";
     private File selectorFile = new File(selectorPath);
     private Image selectorImage;
 
