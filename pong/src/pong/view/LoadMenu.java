@@ -14,21 +14,22 @@ import java.io.*;
  */
 public class LoadMenu implements ImageObserver, KeyListener {
 
-    JFrame frameWindow;
-    JPanel viewPanel;
-    JLabel view;
-    BufferedImage surface;
-    Boolean selectorPosition = true;
+    private JFrame frameWindow;
+    private JPanel viewPanel;
+    private JLabel view;
+    private BufferedImage surface;
+    private Boolean selectorPosition = true;
     //
-    String menuBackgroundPath = "src\\images\\start_menu.png";
-    File menuBackgroundFile = new File(menuBackgroundPath);
+    private String menuBackgroundPath = "src\\images\\start_menu.png";
+    private File menuBackgroundFile = new File(menuBackgroundPath);
     //
-    String selectorPath = "src\\images\\selector.png";
-    File selectorFile = new File(selectorPath);
-    Image selectorImage;
+    private String selectorPath = "src\\images\\selector.png";
+    private File selectorFile = new File(selectorPath);
+    private Image selectorImage;
 
-    public LoadMenu(){
-        frameWindow = new JFrame("Menu");
+    public LoadMenu(JFrame frameWindow, int id){
+        this.frameWindow = frameWindow;
+        this.frameWindow.setTitle("Menu");
         frameWindow.addKeyListener(this);
         view = new JLabel();
         surface = null;
@@ -41,7 +42,6 @@ public class LoadMenu implements ImageObserver, KeyListener {
     }
 
     public void keyPressed(KeyEvent e){
-        System.out.println("Key Pressed: " + e.getKeyChar());
     }
 
     public void keyReleased(KeyEvent e){
@@ -59,7 +59,8 @@ public class LoadMenu implements ImageObserver, KeyListener {
             }else if(e.getKeyCode() == KeyEvent.VK_ENTER){
                 System.out.println("Pressed Enter");
                 if(selectorPosition){
-                    LoadGame loadGame = new LoadGame();
+                    frameWindow.removeKeyListener(this);
+                    LoadGame loadGame = new LoadGame(frameWindow,0);
                     loadGame.background();
                     loadGame.ball();
                     loadGame.racketLeft(0);
@@ -74,7 +75,6 @@ public class LoadMenu implements ImageObserver, KeyListener {
     }
 
     public void keyTyped(KeyEvent e){
-        System.out.println("KeyCode:" + e.getKeyCode());
     }
 
     public void loadStartMenu() throws Exception {

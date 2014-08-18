@@ -36,8 +36,10 @@ public class LoadGame implements ImageObserver, KeyListener {
     File rightRacketFile = new File(rightRacketPath);
     Image rightRacketImage;
 
-    public LoadGame(){
-        frameWindow = new JFrame("Pong");
+    public LoadGame(JFrame frameWindow, int id ){
+        //frameWindow = new JFrame("Pong");
+        this.frameWindow = frameWindow;
+        this.frameWindow.setTitle("Pong");
         frameWindow.addKeyListener(this);
         view = new JLabel();
         surface = null;
