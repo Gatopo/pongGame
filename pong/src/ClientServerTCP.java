@@ -21,6 +21,7 @@ public class ClientServerTCP {
     static String portNumberFromJTextfield;
     static Conections connectionHandler = new Conections();
     static boolean startConnection= false;
+    static boolean stateOfConnection = false;
 
     public static void main (String args[]) throws Exception{
         ClientServerTCP.createConnectionWindow();
@@ -73,14 +74,16 @@ public class ClientServerTCP {
                 public void actionPerformed(ActionEvent actionEvent) {
                     createWaitingForAConnectionWindow(frameWindow, viewPanel);
                     //while(startConnection);
-                    connectionHandler.serverCom("");
-                    LoadMenu loadMenuServer = new LoadMenu(frameWindow, 0);
-                    try {
-                        loadMenuServer.loadStartMenu();
-                        loadMenuServer.loadSelector();
-                    }catch(Exception e){
-                        System.out.println("Error caused by: " + e);
-                        e.printStackTrace();
+                    stateOfConnection = connectionHandler.serverCom("");
+                    if(stateOfConnection) {
+                        LoadMenu loadMenuServer = new LoadMenu(frameWindow, 0);
+                        try {
+                            loadMenuServer.loadStartMenu();
+                            loadMenuServer.loadSelector();
+                        } catch (Exception e) {
+                            System.out.println("Error caused by: " + e);
+                            e.printStackTrace();
+                        }
                     }
                 }
             });
@@ -109,12 +112,14 @@ public class ClientServerTCP {
                 System.out.println("ip address: " + ipAddressFromJTextfield + " and the port number: " + portNumberFromJTextfield);
                 connectionHandler.clientCom(ipAddressFromJTextfield, portNumberFromJTextfield);
                 //executionClient();
-                try {
-                    LoadMenu loadMenuClient = new LoadMenu(jframe, 1);
-                    loadMenuClient.loadStartMenu();
-                    loadMenuClient.loadSelector();
-                }catch(Exception e){
-                    System.err.println("Error caused by: " + e);
+                if (stateOfConnection){
+                    try {
+                        LoadMenu loadMenuClient = new LoadMenu(jframe, 1);
+                        loadMenuClient.loadStartMenu();
+                        loadMenuClient.loadSelector();
+                    } catch (Exception e) {
+                        System.err.println("Error caused by: " + e);
+                    }
                 }
             }
         });
