@@ -55,25 +55,34 @@ public class LoadGame implements ImageObserver, KeyListener {
     public void keyPressed(KeyEvent e){
         if(e.isActionKey()) {
             if (KeyEvent.VK_DOWN == e.getKeyCode()) {
-                YPosLeft += 5;
-                YPosRight += 5;
+                if(YPosLeft < 185) {
+                    YPosLeft += 5;
+                }
+                if( YPosRight < 185) {
+                    YPosRight += 5;
+                }
+                System.out.println("Y Position: " + YPosLeft);
                 racketLeft(YPosLeft);
                 racketRight(YPosRight);
             } else if (e.getKeyCode() == KeyEvent.VK_UP) {
-                YPosLeft -= 5;
-                YPosRight -= 5;
-                racketLeft(--YPosLeft);
-                racketRight(--YPosRight);
+                System.out.println(YPosLeft>-155);
+                if(YPosLeft > -155) {
+                    YPosLeft -= 5;
+                }
+                if(YPosRight > -155) {
+                    YPosRight -= 5;
+                }
+                System.out.println("Y Position: " + YPosLeft);
+                racketLeft(YPosLeft);
+                racketRight(YPosRight);
             }
         }
     }
 
     public void keyReleased(KeyEvent e){
-        System.out.println("Key Released: " + e.getKeyChar());
     }
 
     public void keyTyped(KeyEvent e){
-        System.out.println("KeyCode:" + e.getKeyCode());
     }
 
     public void background() {

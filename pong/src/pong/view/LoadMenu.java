@@ -19,6 +19,13 @@ public class LoadMenu implements ImageObserver, KeyListener {
     JLabel view;
     BufferedImage surface;
     Boolean selectorPosition = true;
+    //
+    String menuBackgroundPath = "src\\images\\start_menu.png";
+    File menuBackgroundFile = new File(menuBackgroundPath);
+    //
+    String selectorPath = "src\\images\\selector.png";
+    File selectorFile = new File(selectorPath);
+    Image selectorImage;
 
     public LoadMenu(){
         frameWindow = new JFrame("Menu");
@@ -72,9 +79,7 @@ public class LoadMenu implements ImageObserver, KeyListener {
 
     public void loadStartMenu() throws Exception {
         try {
-            String path = "src\\images\\start_menu.png";
-            File file = new File(path);
-            surface = ImageIO.read(file);
+            surface = ImageIO.read(menuBackgroundFile);
             view = new JLabel(new ImageIcon(surface));
             frameWindow.setContentPane(view);
             view.repaint();
@@ -91,89 +96,17 @@ public class LoadMenu implements ImageObserver, KeyListener {
         try {
             loadStartMenu();
             Graphics g = surface.getGraphics();
-            String path = "src\\images\\selector.png";
-            File file = new File(path);
-            Image image = ImageIO.read(file);
+            selectorImage = ImageIO.read(selectorFile);
             g.setColor(Color.blue);
             if(selectorPosition) {
-                g.drawImage(image, 0, -87, this);
+                g.drawImage(selectorImage, 0, -87, this);
             }else{
-                g.drawImage(image, 0, -3, this);
+                g.drawImage(selectorImage, 0, -3, this);
             }
             g.dispose();
             view.repaint();
         } catch (HeadlessException hle) {
             System.err.println("Error caused by: " + hle);
-        }
-    }
-
-    public void background() {
-        try{
-            String path = "src\\images\\background.png";
-            File file = new File(path);
-            surface = ImageIO.read(file);
-            view = new JLabel(new ImageIcon(surface));
-            frameWindow.setContentPane(view);
-            view.repaint();
-            //size and show the frame
-            frameWindow.pack();
-            frameWindow.setVisible(true);
-        } catch (HeadlessException hle) {
-            System.err.println("Error caused by: " + hle);
-        } catch (IOException ioe){
-            System.out.println("Error caused by: " + ioe);
-        }
-    }
-
-    public void ball(){
-        try {
-            background();
-            Graphics g = surface.getGraphics();
-            String path = "src\\images\\ball.png";
-            File file = new File(path);
-            Image image = ImageIO.read(file);
-            g.setColor(Color.blue);
-            g.drawImage(image, 0, 0, this);
-            g.dispose();
-            view.repaint();
-        } catch (HeadlessException hle) {
-            System.err.println("Error caused by: " + hle);
-        } catch (IOException ioe){
-            System.out.println("Error caused by: " + ioe);
-        }
-    }
-
-    public void racketLeft(){
-        try {
-            Graphics g = surface.getGraphics();
-            String path = "src\\images\\racket_l.png";
-            File file = new File(path);
-            Image image = ImageIO.read(file);
-            g.setColor(Color.blue);
-            g.drawImage(image, -402, 0, this);
-            g.dispose();
-            view.repaint();
-        } catch (HeadlessException hle) {
-            System.err.println("Error caused by: " + hle);
-        } catch (IOException ioe){
-            System.out.println("Error caused by: " + ioe);
-        }
-    }
-
-    public void racketRight(){
-        try {
-            Graphics g = surface.getGraphics();
-            String path = "src\\images\\racket_r.png";
-            File file = new File(path);
-            Image image = ImageIO.read(file);
-            g.setColor(Color.blue);
-            g.drawImage(image, 400, 0, this);
-            g.dispose();
-            view.repaint();
-        } catch (HeadlessException hle) {
-            System.err.println("Error caused by: " + hle);
-        } catch (IOException ioe){
-            System.out.println("Error caused by: " + ioe);
         }
     }
 }
