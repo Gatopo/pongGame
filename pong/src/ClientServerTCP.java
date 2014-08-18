@@ -1,4 +1,4 @@
-import pong.view.LoadImages;
+import pong.view.LoadMenu;
 
 import javax.swing.*;
 import javax.swing.JFrame;
@@ -8,15 +8,11 @@ import javax.swing.JTextField;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Random;
-import java.util.logging.SocketHandler;
 
 /**
  * Created by mario on 10/08/14.
@@ -28,10 +24,10 @@ public class ClientServerTCP {
     static String portNumberFromJTextfield;
 
     public static void main (String args[]) throws Exception{
-        ClientServerTCP.createConnectionWindow();
-        //LoadImages loadMenu = new LoadImages();
-        //loadMenu.loadStartMenu();
-        //loadMenu.loadSelector();
+        //ClientServerTCP.createConnectionWindow();
+        LoadMenu loadMenu = new LoadMenu();
+        loadMenu.loadStartMenu();
+        loadMenu.loadSelector();
         ServerSocket serverSocket;
         Socket clientSocket;
         String clientIP, portNumber;
@@ -198,7 +194,7 @@ public class ClientServerTCP {
                 Socket socket = serverSocket.accept();
                 //tirar a pantalla de menu
                 System.out.println("Connection accepted");
-                LoadImages startMenu = new LoadImages();
+                LoadMenu startMenu = new LoadMenu();
                 startMenu.loadStartMenu();
                 startMenu.loadSelector();
                 // menu.start();
