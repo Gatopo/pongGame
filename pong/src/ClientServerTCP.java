@@ -1,4 +1,4 @@
-import pong.view.LoadImages;
+import pong.view.LoadMenu;
 
 import javax.swing.*;
 import javax.swing.JFrame;
@@ -8,15 +8,8 @@ import javax.swing.JTextField;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
-import java.util.Random;
-import java.util.logging.SocketHandler;
 
 /**
  * Created by mario on 10/08/14.
@@ -33,7 +26,7 @@ public class ClientServerTCP {
         ClientServerTCP.createConnectionWindow();
         LoadImages loadMenu = new LoadImages();
         loadMenu.loadStartMenu();
-        loadMenu.loadSelector();
+        loadMenu.loadSelector();*/
         ServerSocket serverSocket;
         Socket clientSocket;
         String clientIP, portNumber;
@@ -99,17 +92,25 @@ public class ClientServerTCP {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
                     createWaitingForAConnectionWindow(frameWindow, viewPanel);
-
-
+                    //while(startConnection);
+                    connectionHandler.serverCom("");
+                    LoadMenu loadMenuServer = new LoadMenu(frameWindow, 0);
+                    try {
+                        loadMenuServer.loadStartMenu();
+                        loadMenuServer.loadSelector();
+                    }catch(Exception e){
+                        System.out.println("Error caused by: " + e);
+                    }
                 }
             });
         }catch(HeadlessException hle){
             System.err.println("Error caused by: " + hle);
+        }catch(Exception e){
+            System.err.println("Error caused by: " + e);
         }
     }
 
-
-    private static void createConnectToWindow(JFrame jframe, JPanel panel){
+    private static void createConnectToWindow(final JFrame jframe, JPanel panel){
         panel.removeAll();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         //Create the title in the window.
@@ -124,9 +125,16 @@ public class ClientServerTCP {
                 System.out.println("makeConnection was clicked");
                 ipAddressFromJTextfield = ipAddressJTextfield.getText();
                 portNumberFromJTextfield = portNumberJTextfield.getText();
-                System.out.println("ip address: " + ipAddressFromJTextfield + "and the port number: " + portNumberFromJTextfield);
+                System.out.println("ip address: " + ipAddressFromJTextfield + " and the port number: " + portNumberFromJTextfield);
                 connectionHandler.clientCom(ipAddressFromJTextfield, portNumberFromJTextfield);
                 //executionClient();
+                try {
+                    LoadMenu loadMenuClient = new LoadMenu(jframe, 1);
+                    loadMenuClient.loadStartMenu();
+                    loadMenuClient.loadSelector();
+                }catch(Exception e){
+                    System.err.println("Error caused by: " + e);
+                }
             }
         });
         panel.add(title);
@@ -167,5 +175,4 @@ public class ClientServerTCP {
         panel.removeAll();
         //Add Images
     }
-
 }
