@@ -24,7 +24,8 @@ public class ClientServerTCP {
 
     public static void main (String args[]) throws Exception{
         ClientServerTCP.createConnectionWindow();
-        /*LoadMenu loadMenu = new LoadMenu();
+
+        /*LoadImages loadMenu = new LoadImages();
         loadMenu.loadStartMenu();
         loadMenu.loadSelector();*/
         ServerSocket serverSocket;
@@ -34,28 +35,6 @@ public class ClientServerTCP {
 
         clientIP = ipAddressFromJTextfield;
         portNumber = portNumberFromJTextfield;
-
-        //Empezar a construir parametros para la conexion
-
-        //}
-        /*
-        L(clientIP.isEmpty()){
-            //recibir el parametro del puerto
-            try {
-                if(port != null) {
-                    serverSocket = new ServerSocket(port);
-                    while(true){
-                        Socket socket = serverSocket.accept();
-                        //tirar a pantalla de menu
-                        System.out.println("Connection accepted");
-                        // menu.start();
-                    }
-                }
-            } catch (IOException ioe) {
-                System.err.println("ERROR: Socket connection failed. Exception caused by: " + ioe);
-            }
-        }*/
-
     }
 
     private static void createConnectionWindow(){
@@ -101,6 +80,7 @@ public class ClientServerTCP {
                         loadMenuServer.loadSelector();
                     }catch(Exception e){
                         System.out.println("Error caused by: " + e);
+                        e.printStackTrace();
                     }
                 }
             });

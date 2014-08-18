@@ -22,18 +22,18 @@ public class LoadGame implements ImageObserver, KeyListener {
     private Boolean selectorPosition = true;
     private int YPosRight, YPosLeft;
     private int gamerID;
-    private final String pathBackground = "src\\images\\background.png";
+    private final String pathBackground = "src/images/background.png";
     private File fileBackground;
     //
-    private String ballImagePath = "src\\images\\ball.png";
+    private String ballImagePath = "src/images/ball.png";
     private File ballFile = new File(ballImagePath);
     private Image ballImage;
     //
-    String leftRacketPath = "src\\images\\racket_l.png";
+    String leftRacketPath = "src/images/racket_l.png";
     File leftRacketFile = new File(leftRacketPath);
     Image leftRacketImage;
     //
-    String rightRacketPath = "src\\images\\racket_r.png";
+    String rightRacketPath = "src/images/racket_r.png";
     File rightRacketFile = new File(rightRacketPath);
     Image rightRacketImage;
 
