@@ -30,7 +30,7 @@ public class ClientServerTCP {
     static boolean startConnection= false;
 
     public static void main (String args[]) throws Exception{
-        //ClientServerTCP.createConnectionWindow();
+        ClientServerTCP.createConnectionWindow();
         LoadImages loadMenu = new LoadImages();
         loadMenu.loadStartMenu();
         loadMenu.loadSelector();
@@ -99,9 +99,7 @@ public class ClientServerTCP {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
                     createWaitingForAConnectionWindow(frameWindow, viewPanel);
-                    while(startConnection) {
-                        connectionHandler.serverCom("");
-                    }
+
 
                 }
             });
@@ -109,6 +107,7 @@ public class ClientServerTCP {
             System.err.println("Error caused by: " + hle);
         }
     }
+
 
     private static void createConnectToWindow(JFrame jframe, JPanel panel){
         panel.removeAll();
