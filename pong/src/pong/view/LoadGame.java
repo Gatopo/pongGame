@@ -21,6 +21,7 @@ public class LoadGame implements ImageObserver, KeyListener {
     private BufferedImage surface;
     private Boolean selectorPosition = true;
     private int YPosRight, YPosLeft;
+    private int gamerID;
     private final String pathBackground = "src\\images\\background.png";
     private File fileBackground;
     //
@@ -37,7 +38,6 @@ public class LoadGame implements ImageObserver, KeyListener {
     Image rightRacketImage;
 
     public LoadGame(JFrame frameWindow, int id ){
-        //frameWindow = new JFrame("Pong");
         this.frameWindow = frameWindow;
         this.frameWindow.setTitle("Pong");
         frameWindow.addKeyListener(this);
@@ -47,6 +47,7 @@ public class LoadGame implements ImageObserver, KeyListener {
         frameWindow.setContentPane(view);
         YPosRight = 0;
         YPosLeft = 0;
+        gamerID = id;
         fileBackground = new File(pathBackground);
     }
 
@@ -55,12 +56,13 @@ public class LoadGame implements ImageObserver, KeyListener {
     }
 
     public void keyPressed(KeyEvent e){
+        System.out.println("gamerID: " + gamerID);
         if(e.isActionKey()) {
             if (KeyEvent.VK_DOWN == e.getKeyCode()) {
-                if(YPosLeft < 185) {
+                if(YPosLeft < 185 && gamerID == 0) {
                     YPosLeft += 5;
                 }
-                if( YPosRight < 185) {
+                if( YPosRight < 185 && gamerID == 1) {
                     YPosRight += 5;
                 }
                 System.out.println("Y Position: " + YPosLeft);
@@ -68,10 +70,10 @@ public class LoadGame implements ImageObserver, KeyListener {
                 racketRight(YPosRight);
             } else if (e.getKeyCode() == KeyEvent.VK_UP) {
                 System.out.println(YPosLeft>-155);
-                if(YPosLeft > -155) {
+                if(YPosLeft > -155 && gamerID == 0) {
                     YPosLeft -= 5;
                 }
-                if(YPosRight > -155) {
+                if(YPosRight > -155 && gamerID == 1) {
                     YPosRight -= 5;
                 }
                 System.out.println("Y Position: " + YPosLeft);

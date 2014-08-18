@@ -39,7 +39,7 @@ public class ClientServerTCP {
 
         //}
         /*
-        while(clientIP.isEmpty()){
+        L(clientIP.isEmpty()){
             //recibir el parametro del puerto
             try {
                 if(port != null) {
@@ -71,6 +71,7 @@ public class ClientServerTCP {
             JLabel title = new JLabel("Pong Connection");
             JButton connectTo = new JButton("Connect to");
             JButton waitForAConnection = new JButton("Wait for a connection");
+            frameWindow.setResizable(false);
 
             //Adds the created components.
             viewPanel.add(title);

@@ -19,6 +19,7 @@ public class LoadMenu implements ImageObserver, KeyListener {
     private JLabel view;
     private BufferedImage surface;
     private Boolean selectorPosition = true;
+    private int gamerID;
     //
     private String menuBackgroundPath = "src\\images\\start_menu.png";
     private File menuBackgroundFile = new File(menuBackgroundPath);
@@ -33,6 +34,7 @@ public class LoadMenu implements ImageObserver, KeyListener {
         frameWindow.addKeyListener(this);
         view = new JLabel();
         surface = null;
+        gamerID = id;
         frameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frameWindow.setContentPane(view);
     }
@@ -60,7 +62,7 @@ public class LoadMenu implements ImageObserver, KeyListener {
                 System.out.println("Pressed Enter");
                 if(selectorPosition){
                     frameWindow.removeKeyListener(this);
-                    LoadGame loadGame = new LoadGame(frameWindow,0);
+                    LoadGame loadGame = new LoadGame(frameWindow,gamerID);
                     loadGame.background();
                     loadGame.ball();
                     loadGame.racketLeft(0);
