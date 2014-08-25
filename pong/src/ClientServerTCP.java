@@ -74,7 +74,7 @@ public class ClientServerTCP {
                 public void actionPerformed(ActionEvent actionEvent) {
                     createWaitingForAConnectionWindow(frameWindow, viewPanel);
                     //while(startConnection);
-                    stateOfConnection = connectionHandler.serverCom("");
+                    stateOfConnection = connectionHandler.serverCom("4502");
                     if(stateOfConnection) {
                         LoadMenu loadMenuServer = new LoadMenu(frameWindow, 0);
                         try {
@@ -106,20 +106,21 @@ public class ClientServerTCP {
         makeConnection.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                System.out.println("makeConnection was clicked");
                 ipAddressFromJTextfield = ipAddressJTextfield.getText();
                 portNumberFromJTextfield = portNumberJTextfield.getText();
                 System.out.println("ip address: " + ipAddressFromJTextfield + " and the port number: " + portNumberFromJTextfield);
-                connectionHandler.clientCom(ipAddressFromJTextfield, portNumberFromJTextfield);
+                stateOfConnection = connectionHandler.clientCom(ipAddressFromJTextfield, portNumberFromJTextfield);
                 //executionClient();
                 if (stateOfConnection){
+                    LoadMenu loadMenuClient = new LoadMenu(jframe, 1);
                     try {
-                        LoadMenu loadMenuClient = new LoadMenu(jframe, 1);
                         loadMenuClient.loadStartMenu();
                         loadMenuClient.loadSelector();
                     } catch (Exception e) {
                         System.err.println("Error caused by: " + e);
                     }
+                }else{
+                    System.out.println("State connection is false");
                 }
             }
         });

@@ -22,18 +22,21 @@ public class Conections {
      * @param IP            Ip addres to stablish communication with Server
      * @param portNumber    Port Number to open the communication with the Server
      */
-    public void clientCom(String IP, String portNumber){
+    public boolean clientCom(String IP, String portNumber){
         Integer port = Integer.parseInt(portNumber);
         if(!IP.isEmpty()){
             try {
                 InetAddress IPAddress = InetAddress.getByName(IP);
                 clientTCPSocket = new Socket(IPAddress, port);
+                System.out.println("Success connection");
+                return true;
             } catch (UnknownHostException ue) {
                 System.err.println("ERROR: IP addres could not be determined. Exception caused by: " + ue);
             } catch (IOException ioe){
                 System.err.println("ERROR: Socket connection failed. Exception caused by: " + ioe);
             }
         }
+        return false;
     }
 
     /**
