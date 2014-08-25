@@ -11,7 +11,7 @@ import java.net.UnknownHostException;
  */
 public class Conections {
 
-    private Socket clientTCPSocket, serverTCPSocket;
+    protected Socket clientTCPSocket, serverTCPSocket;
     private InputStream clientInputStream, serverInputStream;
     private OutputStream clientOutputStream, serverOutputStream;
 
