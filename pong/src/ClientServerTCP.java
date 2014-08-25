@@ -8,6 +8,7 @@ import javax.swing.JTextField;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -30,15 +31,45 @@ public class ClientServerTCP {
         /*LoadImages loadMenu = new LoadImages();
         loadMenu.loadStartMenu();
         loadMenu.loadSelector();*/
-        while(stateOfConnection);
-        Socket serverSocket = connectionHandler.serverTCPSocket;
-        Socket clientSocket = connectionHandler.clientTCPSocket;
-
-        while(connectionType.equals("server")){
-
+        Socket serverSocket = null;
+        InputStream isServer = null;
+        OutputStream osServer = null;
+        BufferedReader bfrServer = null;
+        PrintWriter pwServer = null;
+        Socket clientSocket = null;
+        InputStream isClient = null;
+        OutputStream osClient = null;
+        BufferedReader bfrClient = null;
+        PrintWriter pwClient = null;
+        while(!stateOfConnection);
+        if(connectionType.equals("server")){
+            serverSocket = connectionHandler.serverTCPSocket;
+            isServer = serverSocket.getInputStream();
+            osServer = serverSocket.getOutputStream();
+            bfrServer = new BufferedReader(new InputStreamReader(isServer));
+            pwServer = new PrintWriter(osServer);
+        }else{
+            clientSocket = connectionHandler.clientTCPSocket;
+            isClient = clientSocket.getInputStream();
+            osClient = clientSocket.getOutputStream();
+            bfrClient = new BufferedReader(new InputStreamReader(isClient));
+            pwClient = new PrintWriter(osClient);
         }
+        int tempCont = 0;
+        while(connectionType.equals("server")){
+            if(tempCont < 1000) {
+                pwServer.write(tempCont + " \n");
+                System.out.println("Data Send to the client: " + tempCont++);
+            }
+            bfrServer.readLine();
+            System.out.println("Data Recived from the client " + tempCont++);
+        }
+        String data;
         while(connectionType.equals("client")){
-
+            data = bfrClient.readLine();
+            System.out.println("Data Recived from server: " + data);
+            pwServer.write(1 + " \n");
+            System.out.println("Data Send to the server: 1");
         }
     }
 
@@ -78,13 +109,13 @@ public class ClientServerTCP {
                 public void actionPerformed(ActionEvent actionEvent) {
                     createWaitingForAConnectionWindow(frameWindow, viewPanel);
                     //while(startConnection);
+                    connectionType = "server";
                     stateOfConnection = connectionHandler.serverCom("4502");
                     if(stateOfConnection) {
                         LoadMenu loadMenuServer = new LoadMenu(frameWindow, 0);
                         try {
                             loadMenuServer.loadStartMenu();
                             loadMenuServer.loadSelector();
-                            connectionType = "server";
                         } catch (Exception e) {
                             System.out.println("Error caused by: " + e);
                             e.printStackTrace();
@@ -114,6 +145,7 @@ public class ClientServerTCP {
                 ipAddressFromJTextfield = ipAddressJTextfield.getText();
                 portNumberFromJTextfield = portNumberJTextfield.getText();
                 System.out.println("ip address: " + ipAddressFromJTextfield + " and the port number: " + portNumberFromJTextfield);
+                connectionType = "client";
                 stateOfConnection = connectionHandler.clientCom(ipAddressFromJTextfield, portNumberFromJTextfield);
                 //executionClient();
                 if (stateOfConnection){
@@ -121,7 +153,6 @@ public class ClientServerTCP {
                     try {
                         loadMenuClient.loadStartMenu();
                         loadMenuClient.loadSelector();
-                        connectionType = "client";
                     } catch (Exception e) {
                         System.err.println("Error caused by: " + e);
                     }
@@ -131,7 +162,7 @@ public class ClientServerTCP {
             }
         });
         panel.add(title);
-        panel.add(new JLabel("IP Adress: "));
+        panel.add(new JLabel("IP Address: "));
         panel.add(ipAddressJTextfield);
         panel.add(new JLabel("Port(Opcional): "));
         panel.add(portNumberJTextfield);
