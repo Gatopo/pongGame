@@ -22,6 +22,7 @@ public class ClientServerTCP {
     static Conections connectionHandler = new Conections();
     static boolean startConnection= false;
     static boolean stateOfConnection = false;
+    static String connectionType;
 
     public static void main (String args[]) throws Exception{
         ClientServerTCP.createConnectionWindow();
@@ -29,13 +30,16 @@ public class ClientServerTCP {
         /*LoadImages loadMenu = new LoadImages();
         loadMenu.loadStartMenu();
         loadMenu.loadSelector();*/
-        ServerSocket serverSocket;
-        Socket clientSocket;
-        String clientIP, portNumber;
-        //Aqui se reciben los parametros de IP y puerto, de la interfaz grafica
+        while(stateOfConnection);
+        Socket serverSocket = connectionHandler.serverTCPSocket;
+        Socket clientSocket = connectionHandler.clientTCPSocket;
 
-        clientIP = ipAddressFromJTextfield;
-        portNumber = portNumberFromJTextfield;
+        while(connectionType.equals("server")){
+
+        }
+        while(connectionType.equals("client")){
+
+        }
     }
 
     private static void createConnectionWindow(){
@@ -80,6 +84,7 @@ public class ClientServerTCP {
                         try {
                             loadMenuServer.loadStartMenu();
                             loadMenuServer.loadSelector();
+                            connectionType = "server";
                         } catch (Exception e) {
                             System.out.println("Error caused by: " + e);
                             e.printStackTrace();
@@ -116,6 +121,7 @@ public class ClientServerTCP {
                     try {
                         loadMenuClient.loadStartMenu();
                         loadMenuClient.loadSelector();
+                        connectionType = "client";
                     } catch (Exception e) {
                         System.err.println("Error caused by: " + e);
                     }
