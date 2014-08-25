@@ -53,6 +53,7 @@ public class Conections {
             } else {
                 System.err.println("Port " + port + " is used on another app");
                 System.err.println("Please use another port");
+
             }
             return status;
         } catch (IOException ioe) {
@@ -83,7 +84,6 @@ public class Conections {
                 }
             }
         }
-
         return false;
     }
 
