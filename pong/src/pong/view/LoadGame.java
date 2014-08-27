@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * Created by Steven on 17/08/2014.
  */
-public class LoadGame implements ImageObserver, KeyListener {
+public class LoadGame implements ImageObserver, KeyListener{
 
     private JFrame frameWindow;
     private JPanel viewPanel;
@@ -49,6 +49,9 @@ public class LoadGame implements ImageObserver, KeyListener {
         YPosLeft = 0;
         gamerID = id;
         fileBackground = new File(pathBackground);
+    }
+
+    public LoadGame(){
     }
 
     public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height){
@@ -105,14 +108,16 @@ public class LoadGame implements ImageObserver, KeyListener {
         }
     }
 
-    public void ball(){
+    public void ball(int posX, int posY){
         try {
             Graphics g = surface.getGraphics();
             ballImage = ImageIO.read(ballFile);
             g.setColor(Color.blue);
-            g.drawImage(ballImage, 0, 0, this);
+            g.drawImage(ballImage, posX, posY, this);
             g.dispose();
             view.repaint();
+            //Despues de que ambos usuarios presionaron ENTER
+            //GameObjects.setBallPositions(posX, posY);
         } catch (HeadlessException hle) {
             System.err.println("Error caused by: " + hle);
         } catch (IOException ioe){
@@ -138,7 +143,7 @@ public class LoadGame implements ImageObserver, KeyListener {
     public void racketRight(int YPos){
         try {
             background();
-            ball();
+            ball(0,0);
             racketLeft(YPosLeft);
             Graphics g = surface.getGraphics();
             rightRacketImage = ImageIO.read(rightRacketFile);

@@ -1,4 +1,5 @@
 import pong.view.LoadMenu;
+import threadobjects.Ball;
 
 import javax.swing.*;
 import javax.swing.JFrame;
@@ -8,6 +9,7 @@ import javax.swing.JTextField;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -23,22 +25,28 @@ public class ClientServerTCP {
     static boolean startConnection= false;
     static boolean stateOfConnection = false;
     static String connectionType;
+    static BufferedReader clientBuffer;
+    static BufferedReader serverBuffer;
+    // bufferedreader para cliente y servidor
+    //
 
     public static void main (String args[]) throws Exception{
         ClientServerTCP.createConnectionWindow();
 
-        /*LoadImages loadMenu = new LoadImages();
-        loadMenu.loadStartMenu();
-        loadMenu.loadSelector();*/
-        while(stateOfConnection);
+
+        Ball ball = new Ball();
+        //while(stateOfConnection);
         Socket serverSocket = connectionHandler.serverTCPSocket;
         Socket clientSocket = connectionHandler.clientTCPSocket;
 
+        while(connectionType == null);
+        System.out.println(connectionType);
+        ball.run();
         while(connectionType.equals("server")){
-
+            System.out.println("APP: Im now a Server");
         }
         while(connectionType.equals("client")){
-
+            System.out.println("APP: Im now a Client");
         }
     }
 
