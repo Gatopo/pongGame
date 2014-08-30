@@ -64,7 +64,7 @@ public class LoadMenu implements ImageObserver, KeyListener {
                     frameWindow.removeKeyListener(this);
                     LoadGame loadGame = new LoadGame(frameWindow,gamerID);
                     loadGame.background();
-                    loadGame.ball();
+                    loadGame.ball(0,0);
                     loadGame.racketLeft(0);
                     loadGame.racketRight(0);
                 }else{
