@@ -14,12 +14,14 @@ public class ClientServerTCP {
         Ball ball = new Ball();
         while(playerWindow.connectionType == null);
         System.out.println(playerWindow.connectionType);
-        ball.run();
+        //ball.run();
         while(playerWindow.connectionType.equals("server")){
             System.out.println("APP: Im now a Server");
+            playerWindow.sleep(1000);
         }
         while(playerWindow.connectionType.equals("client")){
             System.out.println("APP: Im now a Client");
+            playerWindow.sleep(1000);
         }
     }
 }
