@@ -9,7 +9,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
@@ -22,26 +21,36 @@ public class ClientServerTCP {
     static String portNumberFromJTextfield;
     static Conections connectionHandler = new Conections();
     static boolean startConnection= false;
-    static boolean stateOfConnection = false;
+    static boolean stateOfConnectionServer = false;
+    static boolean stateOfConnectionClient = false;
     static String connectionType;
 
     public static void main (String args[]) throws Exception{
+        boolean stateOfConnectionServer = false;
+        boolean stateOfConnectionClient = false;
+
         ClientServerTCP.createConnectionWindow();
 
         /*LoadImages loadMenu = new LoadImages();
         loadMenu.loadStartMenu();
         loadMenu.loadSelector();*/
         Socket serverSocket = null;
-        InputStream isServer = null;
-        OutputStream osServer = null;
-        BufferedReader bfrServer = null;
-        PrintWriter pwServer = null;
         Socket clientSocket = null;
+
+        InputStream isServer = null;
         InputStream isClient = null;
+
+        OutputStream osServer = null;
         OutputStream osClient = null;
+
+        BufferedReader bfrServer = null;
         BufferedReader bfrClient = null;
+
+        PrintWriter pwServer = null;
         PrintWriter pwClient = null;
-        while(!stateOfConnection);
+
+
+        while(!stateOfConnectionClient);
         if(connectionType.equals("server")){
             serverSocket = connectionHandler.serverTCPSocket;
             isServer = serverSocket.getInputStream();
@@ -58,7 +67,7 @@ public class ClientServerTCP {
         int tempCont = 0;
         while(connectionType.equals("server")){
             if(tempCont < 1000) {
-                pwServer.write(tempCont + " \n");
+                pwServer.println(tempCont + " \n");
                 System.out.println("Data Send to the client: " + tempCont++);
             }
             bfrServer.readLine();
@@ -68,8 +77,8 @@ public class ClientServerTCP {
         while(connectionType.equals("client")){
             data = bfrClient.readLine();
             System.out.println("Data Recived from server: " + data);
-            pwServer.write(1 + " \n");
-            System.out.println("Data Send to the server: 1");
+            //pwClient.write(1 + " \n");
+            //System.out.println("Data Send to the server: 1");
         }
     }
 
@@ -110,8 +119,8 @@ public class ClientServerTCP {
                     createWaitingForAConnectionWindow(frameWindow, viewPanel);
                     //while(startConnection);
                     connectionType = "server";
-                    stateOfConnection = connectionHandler.serverCom("4502");
-                    if(stateOfConnection) {
+                    connectionHandler.serverCom("4502");
+                    if(stateOfConnectionServer) {
                         LoadMenu loadMenuServer = new LoadMenu(frameWindow, 0);
                         try {
                             loadMenuServer.loadStartMenu();
@@ -146,9 +155,10 @@ public class ClientServerTCP {
                 portNumberFromJTextfield = portNumberJTextfield.getText();
                 System.out.println("ip address: " + ipAddressFromJTextfield + " and the port number: " + portNumberFromJTextfield);
                 connectionType = "client";
-                stateOfConnection = connectionHandler.clientCom(ipAddressFromJTextfield, portNumberFromJTextfield);
+                stateOfConnectionClient = connectionHandler.clientCom(ipAddressFromJTextfield, portNumberFromJTextfield);
+                while(!stateOfConnectionServer);
                 //executionClient();
-                if (stateOfConnection){
+                if (stateOfConnectionClient){
                     LoadMenu loadMenuClient = new LoadMenu(jframe, 1);
                     try {
                         loadMenuClient.loadStartMenu();
@@ -178,9 +188,7 @@ public class ClientServerTCP {
         try {
             panel.removeAll();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            //Create the title in the window.
             JLabel title = new JLabel("Waiting for a connection...");
-            //Create the JTextfield
             panel.add(title);
             frameWindow.add(panel);
             frameWindow.pack();
